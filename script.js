@@ -162,7 +162,7 @@
     }
 
 
-        const SPREADSHEET_ID = "1Nq8gmY1huGd6Ioa_UomoAJjRdIrMwmu7JG43mc8Pkgk";
+        const SPREADSHEET_ID = "AIzaSyCMQSLUZgJIir1RpW2O-TxSC_1MlRC5Jak";// Replace with your actual Spreadsheet ID
         let allAttendanceData = [];
         let allStudents = [];
         let attendanceChart = null;
