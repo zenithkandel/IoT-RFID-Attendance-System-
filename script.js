@@ -160,9 +160,7 @@
             modal.style.display = 'none';
         }
     }
-
-
-        const SPREADSHEET_ID = "AIzaSyCMQSLUZgJIir1RpW2O-TxSC_1MlRC5Jak";// Replace with your actual Spreadsheet ID
+        const SPREADSHEET_ID = "1S7L_hKo5LJW6bOPKvxLMkXVSiP4V1CH5rfX6xYqAhBE";// Replace with your actual Spreadsheet ID
         let allAttendanceData = [];
         let allStudents = [];
         let attendanceChart = null;
