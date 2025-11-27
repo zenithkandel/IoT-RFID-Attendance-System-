@@ -1,0 +1,278 @@
+================================================================================
+                           EDU TRACK PRO
+              IoT-Based RFID Smart Attendance System
+================================================================================
+
+Project By: Robotics Club of Kathmandu Model Secondary School (KMSS)
+            Bagbazar, Kathmandu, Nepal
+
+Event:      Tech Expo Demonstration - KMSS Lalitpur
+Date:       November 2025
+
+Original Authors: 
+  - Sakshyam Bastakoti (https://github.com/sakshyambastakoti)
+  - Robotics Club Team Members
+
+================================================================================
+                        PROJECT OVERVIEW
+================================================================================
+
+EDU TRACK PRO is a production-ready IoT-based smart attendance management 
+system that uses RFID (Radio Frequency Identification) technology to automate
+the process of tracking student attendance. The system eliminates manual
+attendance marking, reduces errors, and provides real-time data analytics.
+
+================================================================================
+                        SYSTEM ARCHITECTURE
+================================================================================
+
+The system consists of THREE main components:
+
+1. HARDWARE LAYER (Arduino/NodeMCU)
+   ├── ESP8266 NodeMCU Wi-Fi Development Board
+   ├── MFRC522 RFID Reader Module
+   ├── 16x2 LCD Display (I2C Interface)
+   ├── Buzzer (Audio Feedback)
+   ├── LED Indicators (Visual Feedback)
+   ├── Push Button (Wi-Fi Configuration Reset)
+   └── RFID Cards/Tags (Assigned to Students)
+
+2. CLOUD LAYER (Google Sheets + Apps Script)
+   ├── Google Spreadsheet Database
+   │   ├── Database Sheet (Student Info: UID, Name, Roll No, Class, Address)
+   │   └── Attendance Sheet (Logs: Date, Time, UID, Name, Roll No, Class, Address)
+   └── Google Apps Script (Web App for receiving POST requests)
+
+3. WEB APPLICATION LAYER (This Project)
+   ├── Landing Page (index.html)
+   ├── Authentication System (JavaScript-based)
+   ├── Admin Dashboard (Analytics & Reports)
+   └── Student Portal (Personal Attendance Calendar)
+
+================================================================================
+                        WORKING MECHANISM
+================================================================================
+
+STEP 1: RFID Card Scanning
+   - Student taps their RFID card on the MFRC522 reader
+   - The reader extracts the unique UID (User Identification) from the card
+   - LCD displays "Scanning..." and buzzer provides audio feedback
+
+STEP 2: Data Processing (NodeMCU)
+   - ESP8266 receives the UID from RFID reader via SPI protocol
+   - Creates a JSON payload with UID and timestamp
+   - Connects to Wi-Fi and sends HTTPS POST request to Google Apps Script
+
+STEP 3: Cloud Storage (Google Sheets)
+   - Apps Script receives the POST request
+   - Looks up student information from Database sheet using UID
+   - Logs attendance record with: Date, Time, UID, Name, Roll No, Class, Address
+   - Returns success/failure response to NodeMCU
+
+STEP 4: Feedback to User
+   - LCD displays student name and "Attendance Marked!"
+   - Green LED lights up for success, Red for failure
+   - Buzzer plays success/error tone
+
+STEP 5: Web Dashboard Access
+   - Data is fetched from Google Sheets via public JSON endpoint
+   - Web app displays attendance data with analytics and visualizations
+   - Admin sees all students' data; Students see only their own records
+
+================================================================================
+                        DATA SOURCE
+================================================================================
+
+Google Sheets JSON Endpoint:
+https://docs.google.com/spreadsheets/d/1S7L_hKo5LJW6bOPKvxLMkXVSiP4V1CH5rfX6xYqAhBE/gviz/tq?sheet=attendance&tqx=out:json
+
+Spreadsheet ID: 1S7L_hKo5LJW6bOPKvxLMkXVSiP4V1CH5rfX6xYqAhBE
+
+Sheets Available:
+  1. Database - Student master data (UID mapping)
+  2. Attendance - Attendance logs with timestamps
+
+================================================================================
+                        WEB APPLICATION STRUCTURE
+================================================================================
+
+/IoT-RFID-Attendance-System-
+│
+├── index.html              # Landing page (non-scrollable, minimalistic)
+├── structure.txt           # This file - Project documentation
+│
+├── /css
+│   ├── styles.css          # Global styles
+│   ├── landing.css         # Landing page specific styles
+│   ├── dashboard.css       # Dashboard styles
+│   └── calendar.css        # Calendar component styles
+│
+├── /js
+│   ├── app.js              # Main application logic
+│   ├── auth.js             # Authentication system
+│   ├── api.js              # Google Sheets data fetching
+│   ├── charts.js           # Analytics & chart rendering
+│   └── calendar.js         # Calendar component logic
+│
+├── /pages
+│   ├── login.html          # Login page
+│   ├── admin/
+│   │   ├── dashboard.html  # Admin dashboard
+│   │   ├── students.html   # Student management view
+│   │   └── reports.html    # Reports & analytics
+│   └── student/
+│       ├── dashboard.html  # Student dashboard
+│       └── attendance.html # Personal attendance calendar
+│
+├── /assets
+│   ├── /images             # Icons, logos, backgrounds
+│   └── /fonts              # Custom fonts
+│
+└── /old                    # Original project files (reference)
+    ├── Edu_Track_Pro_Code.ino
+    ├── Edu_Track_Pro_App_Script.txt
+    ├── index.html
+    ├── script.js
+    ├── style.css
+    └── README.md
+
+================================================================================
+                        USER ROLES & FEATURES
+================================================================================
+
+ADMINISTRATOR (Admin Panel)
+───────────────────────────
+  ✓ View all students' attendance records
+  ✓ Analytics dashboard with charts:
+    - Daily/Weekly/Monthly attendance trends
+    - Class-wise attendance comparison
+    - Individual student attendance percentage
+    - Present vs Absent ratio (pie charts)
+    - Attendance heatmaps
+  ✓ Filter by date range, class, student
+  ✓ Export reports (future enhancement)
+  ✓ View real-time attendance feed
+
+STUDENT (Student Portal)
+────────────────────────
+  ✓ View personal attendance only
+  ✓ Calendar-based UI showing:
+    - Green: Present days
+    - Red: Absent days
+    - Gray: Holidays/Non-school days
+  ✓ Attendance percentage display
+  ✓ Monthly attendance summary
+  ✓ Login using Roll Number + UID
+
+================================================================================
+                        AUTHENTICATION SYSTEM
+================================================================================
+
+Type: JavaScript-based client-side authentication (Demo purposes)
+
+Admin Login:
+  - Username: admin
+  - Password: admin123 (configurable)
+
+Student Login:
+  - Roll Number (from Database sheet)
+  - UID (RFID card number) as password
+
+Session Management:
+  - LocalStorage based session tokens
+  - Auto logout after inactivity
+  - Role-based access control (admin/student)
+
+Note: For production, implement server-side authentication with proper
+      encryption and secure token management.
+
+================================================================================
+                        TECHNOLOGY STACK
+================================================================================
+
+Frontend:
+  - HTML5, CSS3, JavaScript (ES6+)
+  - Chart.js (for analytics visualizations)
+  - No heavy frameworks (vanilla JS for simplicity)
+
+Backend:
+  - Google Sheets (Database)
+  - Google Apps Script (API endpoint)
+
+Hardware:
+  - Arduino/ESP8266 (NodeMCU)
+  - MFRC522 RFID Module
+  - I2C LCD Display
+
+Protocols:
+  - SPI (NodeMCU ↔ RFID Reader)
+  - I2C (NodeMCU ↔ LCD)
+  - HTTPS (NodeMCU ↔ Google Apps Script)
+  - JSON (Data format)
+
+================================================================================
+                        KEY FEATURES
+================================================================================
+
+  ✦ Real-time Attendance Tracking
+  ✦ Cloud-based Data Storage (Google Sheets)
+  ✦ No Internet Required for Scanning (queues offline, syncs later)
+  ✦ Beautiful, Responsive Web Dashboard
+  ✦ Role-based Access (Admin/Student)
+  ✦ Interactive Analytics & Charts
+  ✦ Calendar-based Attendance View
+  ✦ Minimalistic & Modern UI Design
+  ✦ Mobile-friendly Interface
+  ✦ Wi-Fi Configuration via Hotspot
+  ✦ Audio-Visual Feedback (Buzzer + LED + LCD)
+
+================================================================================
+                        PURPOSE & USE CASES
+================================================================================
+
+1. EDUCATIONAL INSTITUTIONS
+   - Schools, Colleges, Universities
+   - Coaching Centers, Training Institutes
+
+2. BENEFITS
+   - Eliminates manual attendance marking
+   - Reduces proxy attendance
+   - Real-time tracking for parents/admin
+   - Historical data for analysis
+   - Time-saving for teachers
+
+3. TECH EXPO DEMONSTRATION
+   - Showcases IoT capabilities
+   - Demonstrates cloud integration
+   - Interactive hardware-software system
+   - Real-world problem solving
+
+================================================================================
+                        FUTURE ENHANCEMENTS
+================================================================================
+
+  □ SMS/Email notifications to parents
+  □ Mobile app (React Native/Flutter)
+  □ Biometric integration (fingerprint)
+  □ Face recognition option
+  □ Multiple RFID reader support
+  □ Offline mode with sync
+  □ PDF report generation
+  □ Multi-school support
+  □ API for third-party integrations
+
+================================================================================
+                        CONTACT & CREDITS
+================================================================================
+
+Robotics Club - KMSS Bagbazar
+Kathmandu Model Secondary School
+Bagbazar, Kathmandu, Nepal
+
+Original Developer: Sakshyam Bastakoti
+GitHub: https://github.com/sakshyambastakoti
+
+================================================================================
+                           © 2025 EDU TRACK PRO
+              Robotics Club, KMSS Bagbazar - All Rights Reserved
+================================================================================
