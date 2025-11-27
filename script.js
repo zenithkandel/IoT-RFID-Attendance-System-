@@ -209,7 +209,8 @@
         async function loadData() {
             setLoadingState(true);
             const SHEET_NAME = "Attendance"; // As defined in the Apps Script
-            const queryUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?sheet=${SHEET_NAME}&tqx=out:json`;
+            // const queryUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?sheet=${SHEET_NAME}&tqx=out:json`;
+            const queryUrl = `https://docs.google.com/spreadsheets/d/1S7L_hKo5LJW6bOPKvxLMkXVSiP4V1CH5rfX6xYqAhBE/gviz/tq?sheet=attendance&tqx=out:json`;
 
             try {
                 const response = await fetch(queryUrl);
