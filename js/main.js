@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
             navLinks.style.top = '70px';
             navLinks.style.left = '0';
             navLinks.style.width = '100%';
-            navLinks.style.background = '#fff';
+            navLinks.style.background = '#1e293b';
             navLinks.style.padding = '20px';
-            navLinks.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            navLinks.style.boxShadow = '0 2px 10px rgba(0,0,0,0.3)';
         }
     });
 
