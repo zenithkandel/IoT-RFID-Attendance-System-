@@ -120,34 +120,7 @@ ul {
     color: var(--white);
 }
 
-.status-badge {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--success);
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border: 1px solid rgba(52, 211, 153, 0.2);
-    padding: 8px 16px;
-    background: rgba(52, 211, 153, 0.05);
-}
 
-.status-dot {
-    width: 8px;
-    height: 8px;
-    background-color: var(--success);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--success);
-    animation: pulse-dot 2s infinite;
-}
-
-@keyframes pulse-dot {
-    0% { opacity: 1; box-shadow: 0 0 10px var(--success); }
-    50% { opacity: 0.4; box-shadow: 0 0 0 transparent; }
-    100% { opacity: 1; box-shadow: 0 0 10px var(--success); }
-}
 
 /* Hero Section */
 .hero {
