@@ -674,11 +674,17 @@ footer .container {
 
 .success-tick {
     position: absolute;
-    font-size: 2.5rem;
+    width: 40px;
+    height: 40px;
     color: var(--success);
     opacity: 0;
     transform: scale(0.5);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.success-tick svg {
+    width: 100%;
+    height: 100%;
 }
 
 .sim-card {
