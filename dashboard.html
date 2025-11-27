@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edu Track Pro - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #111;
+        }
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 20px;
+            color: #3b82f6;
+        }
+        p {
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #3b82f6;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="loader"></div>
+        <h1>Dashboard Loading...</h1>
+        <p>This is a placeholder for the actual dashboard file.</p>
+        <p style="font-size: 0.9em; opacity: 0.7;">Please replace 'dashboard.html' with your actual dashboard file (e.g., login.php) in index.html.</p>
+    </div>
+</body>
+</html>
