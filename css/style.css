@@ -457,11 +457,6 @@ body.clicking .cursor-dot {
     align-items: center;
 }
 
-.about-content {
-        grid-template-columns: 1fr;
-        gap: 50px;
-    }
-
 .about-details {
     display: flex;
     flex-direction: column;
