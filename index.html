@@ -6,7 +6,7 @@
     <title>EDU TRACK PRO | Smart Attendance System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,30 +15,79 @@
         }
 
         :root {
-            --bg-primary: #0d0d0d;
-            --bg-secondary: #161616;
-            --bg-card: #1a1a1a;
+            --bg-primary: #09090b;
+            --bg-secondary: #18181b;
+            --bg-card: #1c1c1f;
+            --bg-elevated: #27272a;
             --accent: #3b82f6;
+            --accent-secondary: #8b5cf6;
             --accent-hover: #2563eb;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
-            --text-muted: #666666;
-            --border: #2a2a2a;
+            --success: #22c55e;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #52525b;
+            --border: #27272a;
+            --border-light: #3f3f46;
         }
 
         html, body {
             height: 100%;
             overflow: hidden;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-primary);
             color: var(--text-primary);
+        }
+
+        /* Grid Background */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Gradient Orbs */
+        .gradient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            top: -100px;
+            right: -100px;
+            opacity: 0.15;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent-secondary);
+            bottom: -50px;
+            left: -50px;
+            opacity: 0.1;
         }
 
         /* Layout */
         .page {
             height: 100%;
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            position: relative;
+            z-index: 1;
         }
 
         /* Header */
@@ -46,221 +95,431 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 3rem;
+            padding: 1.25rem 2.5rem;
             border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            background: rgba(9, 9, 11, 0.8);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.625rem;
         }
 
         .logo-icon {
-            width: 32px;
-            height: 32px;
-            background-color: var(--accent);
-            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 10px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
         }
 
         .logo-icon svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             fill: white;
         }
 
         .logo-text {
-            font-family: 'Space Mono', monospace;
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
         }
 
         .nav {
             display: flex;
-            gap: 2rem;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-secondary);
+            padding: 0.375rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
         }
 
         .nav a {
-            font-family: 'Roboto', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 400;
+            font-size: 0.875rem;
+            font-weight: 450;
             color: var(--text-secondary);
             text-decoration: none;
-            transition: color 0.2s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
         }
 
         .nav a:hover {
             color: var(--text-primary);
+            background: var(--bg-elevated);
         }
 
         .header-btn {
-            padding: 0.6rem 1.5rem;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            background-color: var(--accent);
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.2s ease;
-        }
-
-        .header-btn:hover {
-            background-color: var(--accent-hover);
-        }
-
-        /* Main Content */
-        .main {
-            flex: 1;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem 3rem;
-        }
-
-        .content {
-            max-width: 680px;
-            text-align: center;
-        }
-
-        .badge {
-            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 50px;
-            font-family: 'Roboto', sans-serif;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-        }
-
-        .badge-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #22c55e;
-            border-radius: 50%;
-        }
-
-        .title {
-            font-family: 'Poppins', sans-serif;
-            font-size: clamp(2.5rem, 6vw, 3.5rem);
-            font-weight: 600;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .title span {
-            color: var(--accent);
-        }
-
-        .description {
-            font-family: 'Roboto', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 300;
-            line-height: 1.7;
-            color: var(--text-secondary);
-            margin-bottom: 2.5rem;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 3rem;
-        }
-
-        .btn {
-            padding: 0.9rem 2rem;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.95rem;
+            padding: 0.625rem 1.25rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
             font-weight: 500;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
             border-radius: 8px;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.2s ease;
         }
 
-        .btn-primary {
-            background-color: var(--accent);
+        .header-btn:hover {
+            background: var(--bg-elevated);
+            border-color: var(--border-light);
+        }
+
+        .header-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Main Content */
+        .main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 2rem 4rem;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .content {
+            max-width: 560px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.625rem;
+            padding: 0.5rem 0.875rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 1.75rem;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .title {
+            font-size: clamp(2.25rem, 4vw, 3.25rem);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.25rem;
             color: var(--text-primary);
+        }
+
+        .title .highlight {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .description {
+            font-size: 1.0625rem;
+            font-weight: 400;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.875rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, #1d4ed8 100%);
+            color: white;
             border: none;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2), 0 4px 12px rgba(59, 130, 246, 0.25);
         }
 
         .btn-primary:hover {
-            background-color: var(--accent-hover);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2), 0 8px 20px rgba(59, 130, 246, 0.35);
+            transform: translateY(-1px);
         }
 
         .btn-secondary {
-            background-color: transparent;
+            background: var(--bg-secondary);
             color: var(--text-primary);
             border: 1px solid var(--border);
         }
 
         .btn-secondary:hover {
-            border-color: var(--text-muted);
-            background-color: var(--bg-card);
+            background: var(--bg-elevated);
+            border-color: var(--border-light);
         }
 
-        /* Features */
-        .features {
+        /* Stats */
+        .stats {
             display: flex;
-            justify-content: center;
             gap: 2.5rem;
         }
 
-        .feature {
+        .stat {
             display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-family: 'Roboto', sans-serif;
-            font-size: 0.85rem;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 0.8125rem;
             color: var(--text-muted);
         }
 
-        .feature-icon {
-            width: 20px;
-            height: 20px;
+        /* Preview Card */
+        .preview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .preview-card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-card);
+        }
+
+        .preview-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .preview-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+        }
+
+        .preview-dot.red { background: #ef4444; }
+        .preview-dot.yellow { background: #eab308; }
+        .preview-dot.green { background: #22c55e; }
+
+        .preview-title {
+            flex: 1;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .preview-content {
+            padding: 1.5rem;
+        }
+
+        .preview-scanner {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .scanner-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid var(--border);
         }
 
-        .feature-icon svg {
-            width: 16px;
-            height: 16px;
-            stroke: var(--text-muted);
+        .scanner-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--accent);
             fill: none;
-            stroke-width: 2;
+            stroke-width: 1.5;
+        }
+
+        .scanner-text {
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .scanner-subtext {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+
+        .preview-log {
+            display: flex;
+            flex-direction: column;
+            gap: 0.625rem;
+        }
+
+        .log-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .log-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .log-info {
+            flex: 1;
+        }
+
+        .log-name {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .log-time {
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .log-status {
+            font-size: 0.6875rem;
+            font-weight: 500;
+            padding: 0.25rem 0.625rem;
+            border-radius: 100px;
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success);
         }
 
         /* Footer */
         .footer {
-            padding: 1.5rem 3rem;
+            padding: 1.25rem 2.5rem;
             border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(9, 9, 11, 0.8);
+            backdrop-filter: blur(10px);
         }
 
         .footer-left {
-            font-family: 'Roboto', sans-serif;
-            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8125rem;
             color: var(--text-muted);
+        }
+
+        .footer-left svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
         }
 
         .footer-left a {
             color: var(--text-secondary);
             text-decoration: none;
+            transition: color 0.2s;
         }
 
         .footer-left a:hover {
@@ -268,15 +527,36 @@
         }
 
         .footer-right {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'Space Mono', monospace;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
             color: var(--text-muted);
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .main {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+                text-align: center;
+            }
+
+            .content {
+                max-width: 100%;
+            }
+
+            .btn-group {
+                justify-content: center;
+            }
+
+            .stats {
+                justify-content: center;
+            }
+
+            .preview {
+                display: none;
+            }
+        }
+
         @media (max-width: 768px) {
             .header {
                 padding: 1rem 1.5rem;
@@ -296,34 +576,37 @@
 
             .btn {
                 width: 100%;
-                text-align: center;
+                justify-content: center;
             }
 
-            .features {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: center;
+            .stats {
+                gap: 1.5rem;
             }
 
             .footer {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 0.75rem;
                 text-align: center;
-                padding: 1.5rem;
+                padding: 1.25rem 1.5rem;
             }
         }
 
-        @media (max-height: 650px) {
+        @media (max-height: 700px) {
+            .main {
+                padding: 1rem 2rem;
+            }
+
             .badge {
                 margin-bottom: 1rem;
             }
 
             .title {
-                margin-bottom: 1rem;
+                font-size: 2rem;
+                margin-bottom: 0.75rem;
             }
 
             .description {
-                margin-bottom: 1.5rem;
+                margin-bottom: 1.25rem;
             }
 
             .btn-group {
@@ -333,13 +616,18 @@
     </style>
 </head>
 <body>
+    <!-- Background Elements -->
+    <div class="bg-grid"></div>
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+
     <div class="page">
         <!-- Header -->
         <header class="header">
             <div class="logo">
                 <div class="logo-icon">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M4 4h6v6H4V4zm10 0h6v6h-6V4zM4 14h6v6H4v-6zm10 3a3 3 0 1 0 6 0 3 3 0 0 0-6 0z"/>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3 3h7v7H3V3zm11 0h7v7h-7V3zM3 14h7v7H3v-7zm14 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
                     </svg>
                 </div>
                 <span class="logo-text">EDU TRACK PRO</span>
@@ -351,7 +639,14 @@
                 <a href="#contact">Contact</a>
             </nav>
 
-            <a href="pages/login.html" class="header-btn">Login</a>
+            <a href="pages/login.html" class="header-btn">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                    <polyline points="10 17 15 12 10 7"/>
+                    <line x1="15" y1="12" x2="3" y2="12"/>
+                </svg>
+                Login
+            </a>
         </header>
 
         <!-- Main Content -->
@@ -359,51 +654,96 @@
             <div class="content">
                 <div class="badge">
                     <span class="badge-dot"></span>
-                    <span>RFID Powered Attendance</span>
+                    <span>RFID-Powered Attendance System</span>
                 </div>
 
                 <h1 class="title">
-                    Attendance tracking<br>made <span>simple</span>
+                    Track attendance<br>
+                    <span class="highlight">effortlessly</span>
                 </h1>
 
                 <p class="description">
-                    A modern attendance management system built with RFID technology. 
-                    Track attendance in real-time with instant cloud sync and 
-                    comprehensive analytics for administrators and students.
+                    A modern IoT-based attendance system that uses RFID technology 
+                    to instantly log presence. Real-time cloud sync, smart analytics, 
+                    and a beautiful dashboard for both admins and students.
                 </p>
 
                 <div class="btn-group">
-                    <a href="pages/login.html" class="btn btn-primary">Get Started</a>
-                    <a href="#" class="btn btn-secondary" id="learnMoreBtn">How it works</a>
+                    <a href="pages/login.html" class="btn btn-primary">
+                        Get Started
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                            <polyline points="12 5 19 12 12 19"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="btn btn-secondary" id="learnMoreBtn">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polygon points="10 8 16 12 10 16 10 8"/>
+                        </svg>
+                        How it works
+                    </a>
                 </div>
 
-                <div class="features">
-                    <div class="feature">
-                        <span class="feature-icon">
-                            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/>
-                                <polyline points="12,6 12,12 16,14"/>
-                            </svg>
-                        </span>
-                        <span>Real-time sync</span>
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-value">< 1s</span>
+                        <span class="stat-label">Scan time</span>
                     </div>
-                    <div class="feature">
-                        <span class="feature-icon">
-                            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                                <path d="M2 17l10 5 10-5"/>
-                                <path d="M2 12l10 5 10-5"/>
-                            </svg>
-                        </span>
-                        <span>Cloud storage</span>
+                    <div class="stat">
+                        <span class="stat-value">100%</span>
+                        <span class="stat-label">Cloud synced</span>
                     </div>
-                    <div class="feature">
-                        <span class="feature-icon">
-                            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9V3m-9 9a9 9 0 0 1 9-9"/>
-                            </svg>
-                        </span>
-                        <span>Analytics</span>
+                    <div class="stat">
+                        <span class="stat-value">24/7</span>
+                        <span class="stat-label">Access</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview">
+                <div class="preview-card">
+                    <div class="preview-header">
+                        <div class="preview-dots">
+                            <span class="preview-dot red"></span>
+                            <span class="preview-dot yellow"></span>
+                            <span class="preview-dot green"></span>
+                        </div>
+                        <span class="preview-title">attendance_dashboard.app</span>
+                        <div style="width: 52px;"></div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-scanner">
+                            <div class="scanner-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                    <rect x="6" y="8" width="4" height="4"/>
+                                    <path d="M14 8h4"/>
+                                    <path d="M14 12h2"/>
+                                    <path d="M6 16h12"/>
+                                </svg>
+                            </div>
+                            <p class="scanner-text">Ready to scan</p>
+                            <p class="scanner-subtext">Tap your RFID card on the reader</p>
+                        </div>
+                        <div class="preview-log">
+                            <div class="log-item">
+                                <div class="log-avatar">RK</div>
+                                <div class="log-info">
+                                    <p class="log-name">Ram Kumar</p>
+                                    <p class="log-time">08:45:23 AM</p>
+                                </div>
+                                <span class="log-status">Present</span>
+                            </div>
+                            <div class="log-item">
+                                <div class="log-avatar">SP</div>
+                                <div class="log-info">
+                                    <p class="log-name">Sita Poudel</p>
+                                    <p class="log-time">08:42:15 AM</p>
+                                </div>
+                                <span class="log-status">Present</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -412,10 +752,11 @@
         <!-- Footer -->
         <footer class="footer">
             <div class="footer-left">
-                Built by <a href="#">Robotics Club</a>, KMSS Bagbazar
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                Built by <a href="#">Robotics Club</a>, KMSS Bagbazar, Kathmandu
             </div>
             <div class="footer-right">
-                <span>© 2025 EDU TRACK PRO</span>
+                © 2025 EDU TRACK PRO
             </div>
         </footer>
     </div>
@@ -423,7 +764,7 @@
     <script>
         document.getElementById('learnMoreBtn').addEventListener('click', function(e) {
             e.preventDefault();
-            alert('HOW IT WORKS\n\n1. Tap your RFID card on the reader\n2. Attendance is logged instantly\n3. Data syncs to cloud in real-time\n4. View your records anytime\n\nSimple. Fast. Reliable.');
+            alert('HOW IT WORKS\n\n① Tap your RFID card on the reader\n② Attendance is logged instantly\n③ Data syncs to cloud in real-time\n④ View your records anytime via dashboard\n\nSimple. Fast. Reliable.');
         });
     </script>
 </body>
