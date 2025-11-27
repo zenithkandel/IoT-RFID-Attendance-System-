@@ -440,6 +440,17 @@ body.hovering .cursor-outline {
     border-color: transparent;
 }
 
+/* Click state for cursor */
+body.clicking .cursor-outline {
+    width: 30px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+body.clicking .cursor-dot {
+    transform: translate(-50%, -50%) scale(0.5);
+}
+
 /* About Section */
 .about {
     padding: 120px 0;

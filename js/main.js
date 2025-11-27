@@ -63,4 +63,13 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.remove('hovering');
         });
     });
+
+    // Click effect
+    window.addEventListener('mousedown', () => {
+        document.body.classList.add('clicking');
+    });
+
+    window.addEventListener('mouseup', () => {
+        document.body.classList.remove('clicking');
+    });
 });
