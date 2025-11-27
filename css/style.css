@@ -845,4 +845,14 @@ footer .container {
         flex-direction: column;
         gap: 20px;
     }
+
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .simulation-container {
+        transform: scale(1);
+        height: 300px;
+    }
 }
