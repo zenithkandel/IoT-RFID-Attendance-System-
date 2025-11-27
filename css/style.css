@@ -626,6 +626,169 @@ footer .container {
     color: var(--white);
 }
 
+/* Attendance Simulation */
+.simulation-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    perspective: 1000px;
+}
+
+.rfid-reader-box {
+    width: 200px;
+    height: 120px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 10px;
+    position: relative;
+    transform: rotateX(40deg);
+    box-shadow: 0 20px 30px rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.reader-screen {
+    width: 80%;
+    height: 70%;
+    background: #000;
+    border: 1px solid #333;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.reader-signal {
+    color: #333;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+.success-tick {
+    position: absolute;
+    font-size: 2.5rem;
+    color: var(--success);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.sim-card {
+    width: 140px;
+    height: 90px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    position: absolute;
+    top: 0;
+    transform: rotateX(20deg) translateY(-50px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 2;
+    opacity: 0; /* Hidden initially */
+}
+
+.sim-chip {
+    width: 25px;
+    height: 18px;
+    background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+    border-radius: 3px;
+}
+
+.sim-photo {
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.sim-lines span {
+    display: block;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin-bottom: 4px;
+}
+
+.sim-lines span:first-child { width: 60%; }
+.sim-lines span:last-child { width: 40%; }
+
+.plus-one-particle {
+    position: absolute;
+    color: var(--success);
+    font-weight: 700;
+    font-size: 1.2rem;
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+    pointer-events: none;
+}
+
+/* Animation Classes */
+.simulation-container.active .sim-card {
+    animation: card-tap 3s infinite;
+}
+
+.simulation-container.active .success-tick {
+    animation: tick-pop 3s infinite;
+}
+
+.simulation-container.active .reader-signal {
+    animation: signal-flash 3s infinite;
+}
+
+.simulation-container.active .plus-one-particle {
+    animation: particle-float 3s infinite;
+}
+
+@keyframes card-tap {
+    0% { opacity: 0; transform: rotateX(20deg) translateY(-80px) translateZ(0); }
+    20% { opacity: 1; transform: rotateX(20deg) translateY(-80px) translateZ(0); }
+    40% { transform: rotateX(10deg) translateY(40px) translateZ(20px); } /* Touch */
+    45% { transform: rotateX(10deg) translateY(40px) translateZ(20px); } /* Hold */
+    60% { opacity: 1; transform: rotateX(20deg) translateY(-80px) translateZ(0); }
+    100% { opacity: 0; transform: rotateX(20deg) translateY(-80px) translateZ(0); }
+}
+
+@keyframes tick-pop {
+    0%, 35% { opacity: 0; transform: scale(0.5); }
+    40% { opacity: 1; transform: scale(1.2); }
+    45% { transform: scale(1); }
+    80% { opacity: 1; }
+    90%, 100% { opacity: 0; transform: scale(0.5); }
+}
+
+@keyframes signal-flash {
+    0%, 35% { color: #333; }
+    40%, 80% { color: var(--success); text-shadow: 0 0 10px var(--success); }
+    100% { color: #333; }
+}
+
+@keyframes particle-float {
+    0%, 40% { opacity: 0; transform: translate(-50%, -20px) scale(0.5); }
+    45% { opacity: 1; transform: translate(-50%, -60px) scale(1.2); }
+    70% { opacity: 0; transform: translate(-50%, -100px) scale(1); }
+    100% { opacity: 0; }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .navbar .nav-links {

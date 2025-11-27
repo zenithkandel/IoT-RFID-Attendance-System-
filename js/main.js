@@ -72,4 +72,22 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('mouseup', () => {
         document.body.classList.remove('clicking');
     });
+
+    // Scroll Animation Observer
+    const observerOptions = {
+        threshold: 0.5
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, observerOptions);
+
+    const simContainer = document.querySelector('.simulation-container');
+    if (simContainer) {
+        observer.observe(simContainer);
+    }
 });
